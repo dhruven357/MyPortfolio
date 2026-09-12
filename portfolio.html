@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhruven Bhatol — Java Backend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B0C0E;
+    --surface: #15171A;
+    --surface-2: #1C1F23;
+    --border: #2A2C30;
+    --text: #E9E7E2;
+    --text-dim: #9A9C9F;
+    --amber: #FFB000;
+    --amber-dim: #B8830A;
+    --teal: #4FA890;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Inter', sans-serif;
+    --display: 'Space Grotesk', sans-serif;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--amber); color:#0B0C0E; }
+
+  a{ color:inherit; text-decoration:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 24px; }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,12,14,0.85);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:64px;
+  }
+  .logo{
+    font-family:var(--mono); font-size:15px; color:var(--amber);
+  }
+  .navlinks{ display:flex; gap:28px; font-size:14px; color:var(--text-dim); }
+  .navlinks a:hover{ color:var(--text); }
+  .navlinks a:focus-visible, a:focus-visible, button:focus-visible{
+    outline:2px solid var(--amber); outline-offset:3px; border-radius:2px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{ padding:88px 0 72px; }
+  .hero-grid{
+    display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:center;
+  }
+  .kicker{
+    font-family:var(--mono); font-size:13px; color:var(--teal);
+    margin-bottom:18px; letter-spacing:0.02em;
+  }
+  h1.name{
+    font-family:var(--display); font-weight:700;
+    font-size:clamp(34px, 5vw, 52px);
+    line-height:1.08; letter-spacing:-0.01em;
+    margin-bottom:18px;
+  }
+  .hero p.lede{
+    font-size:17px; color:var(--text-dim); max-width:46ch; margin-bottom:28px;
+  }
+  .hero-cta{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:11px 20px; border-radius:6px; font-size:14px; font-weight:500;
+    border:1px solid var(--border); transition:border-color .15s, background .15s;
+  }
+  .btn-primary{ background:var(--amber); color:#0B0C0E; border-color:var(--amber); font-weight:600; }
+  .btn-primary:hover{ background:#FFC33D; }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
+
+  /* terminal card */
+  .terminal{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    overflow:hidden; box-shadow:0 20px 60px -20px rgba(0,0,0,0.6);
+  }
+  .term-bar{
+    display:flex; gap:7px; padding:12px 14px; border-bottom:1px solid var(--border);
+    background:var(--surface-2);
+  }
+  .dot{ width:10px; height:10px; border-radius:50%; background:#3A3D42; }
+  .term-body{
+    padding:20px; font-family:var(--mono); font-size:13px; color:var(--text-dim);
+    min-height:180px;
+  }
+  .term-body .line{ margin-bottom:10px; }
+  .term-body .prompt{ color:var(--teal); }
+  .term-body .out{ color:var(--text); }
+  .caret{
+    display:inline-block; width:7px; height:14px; background:var(--amber);
+    animation:blink 1s steps(1) infinite; vertical-align:middle; margin-left:2px;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding:64px 0; border-top:1px solid var(--border); }
+  .section-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:32px; }
+  .section-num{ font-family:var(--mono); font-size:13px; color:var(--amber-dim); }
+  h2{ font-family:var(--display); font-size:24px; font-weight:600; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .about-grid p{ color:var(--text-dim); font-size:15.5px; margin-bottom:14px; }
+  .stack-list{ list-style:none; }
+  .stack-list li{
+    display:flex; justify-content:space-between; padding:10px 0;
+    border-bottom:1px solid var(--border); font-size:14px;
+  }
+  .stack-list li:last-child{ border-bottom:none; }
+  .stack-label{ color:var(--text-dim); }
+  .stack-val{ font-family:var(--mono); font-size:13px; }
+
+  /* ---------- PROJECTS ---------- */
+  .projects{ display:flex; flex-direction:column; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .project{
+    background:var(--surface); padding:26px 28px; display:grid;
+    grid-template-columns:160px 1fr; gap:24px; align-items:start;
+  }
+  .project-year{ font-family:var(--mono); font-size:13px; color:var(--text-dim); padding-top:3px; }
+  .project h3{ font-family:var(--display); font-size:18px; font-weight:600; margin-bottom:8px; }
+  .project p{ color:var(--text-dim); font-size:14.5px; margin-bottom:12px; max-width:60ch; }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .tag{
+    font-family:var(--mono); font-size:11.5px; color:var(--teal);
+    border:1px solid rgba(79,168,144,0.35); padding:3px 8px; border-radius:4px;
+  }
+  .project-links{ display:flex; gap:16px; font-size:13.5px; }
+  .project-links a{ color:var(--text); border-bottom:1px solid var(--border); }
+  .project-links a:hover{ border-color:var(--amber); color:var(--amber); }
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-item{ display:grid; grid-template-columns:200px 1fr; gap:24px; padding:20px 0; border-bottom:1px solid var(--border); }
+  .exp-item:last-child{ border-bottom:none; }
+  .exp-time{ font-family:var(--mono); font-size:13px; color:var(--text-dim); }
+  .exp-role{ font-weight:600; font-size:15.5px; margin-bottom:4px; }
+  .exp-org{ color:var(--teal); font-size:14px; margin-bottom:8px; }
+  .exp-desc{ color:var(--text-dim); font-size:14.5px; max-width:62ch; }
+
+  /* ---------- CONTACT ---------- */
+  .contact-box{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:40px; text-align:left;
+  }
+  .contact-box h2{ margin-bottom:10px; }
+  .contact-box p{ color:var(--text-dim); font-size:15px; margin-bottom:24px; max-width:50ch; }
+  .contact-methods{ display:flex; gap:16px; flex-wrap:wrap; }
+
+  footer{ padding:32px 0; text-align:center; color:var(--text-dim); font-size:13px; font-family:var(--mono); }
+
+  @media (max-width:760px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .project, .exp-item{ grid-template-columns:1fr; gap:8px; }
+    .navlinks{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="logo">dhruven.bhatol</a>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="kicker">Java Backend Developer — Spring Boot &amp; PostgreSQL</div>
+        <h1 class="name">Dhruven Bhatol builds reliable backend systems with Java.</h1>
+        <p class="lede">I build backend applications with Core Java, Spring Boot, JPA/Hibernate, and PostgreSQL — from REST APIs to transaction-safe data layers. M.Sc. Mathematics grad, self-taught into backend development.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <div class="terminal" aria-hidden="true">
+        <div class="term-bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="term-body">
+          <div class="line"><span class="prompt">$</span> whoami</div>
+          <div class="line out">dhruven_bhatol</div>
+          <div class="line"><span class="prompt">$</span> cat role.txt</div>
+          <div class="line out">Java Backend Developer, Open to Work</div>
+          <div class="line"><span class="prompt">$</span> ls skills/</div>
+          <div class="line out">java  spring-boot  hibernate  postgresql  git</div>
+          <div class="line"><span class="prompt">$</span> <span class="caret"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">01</span><h2>About</h2></div>
+      <div class="about-grid">
+        <div>
+          <p>I'm a Java backend developer with a strong foundation in Core Java and hands-on experience building backend systems with Spring Boot, JPA/Hibernate, JDBC, and PostgreSQL. I enjoy working through CRUD operations, database relationships, transaction management, and REST API design.</p>
+          <p>My background is a bit non-traditional — an M.Sc. in Mathematics gave me strong analytical and problem-solving habits, which I've carried into backend development. I'm currently building and shipping personal projects while looking for my first full-time Java developer role.</p>
+        </div>
+        <ul class="stack-list">
+          <li><span class="stack-label">Core</span><span class="stack-val">Java, OOP, Collections, Multithreading</span></li>
+          <li><span class="stack-label">Backend</span><span class="stack-val">Spring, Spring Boot, JPA / Hibernate</span></li>
+          <li><span class="stack-label">Data</span><span class="stack-val">SQL, PostgreSQL, JDBC</span></li>
+          <li><span class="stack-label">Tools</span><span class="stack-val">Git, GitHub, Postman</span></li>
+          <li><span class="stack-label">Based in</span><span class="stack-val">Palanpur, Gujarat, IN</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">02</span><h2>Projects</h2></div>
+      <div class="projects">
+        <div class="project">
+          <div class="project-year">2026</div>
+          <div>
+            <h3>REST API service with Spring Boot + PostgreSQL</h3>
+            <p>A backend application with full CRUD operations, entity relationships via JPA/Hibernate, request validation, and centralized exception handling. Tested end-to-end with Postman.</p>
+            <div class="tags"><span class="tag">spring boot</span><span class="tag">postgresql</span><span class="tag">jpa/hibernate</span></div>
+            <div class="project-links"><a href="#">Source</a></div>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-year">2026</div>
+          <div>
+            <h3>Transaction-safe data layer with JDBC</h3>
+            <p>A Java application handling batch processing and transaction management directly with JDBC — connection handling, prepared statements, and rollback-safe writes.</p>
+            <div class="tags"><span class="tag">java</span><span class="tag">jdbc</span><span class="tag">sql</span></div>
+            <div class="project-links"><a href="#">Source</a></div>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project-year">2026</div>
+          <div>
+            <h3>Core Java practice projects</h3>
+            <p>A set of smaller Java projects built to strengthen fundamentals — OOP design, the Collections framework, exception handling, and multithreading.</p>
+            <div class="tags"><span class="tag">java</span><span class="tag">oop</span><span class="tag">multithreading</span></div>
+            <div class="project-links"><a href="#">GitHub</a></div>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:16px; font-size:13.5px; color:var(--text-dim); font-family:var(--mono);">// swap in your real project names, descriptions, and GitHub links here</p>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">03</span><h2>Experience &amp; Education</h2></div>
+      <div>
+        <div class="exp-item">
+          <div class="exp-time">Aug 2026 — Present</div>
+          <div>
+            <div class="exp-role">Java Backend Developer</div>
+            <div class="exp-org">Self-Employed, Palanpur</div>
+            <div class="exp-desc">Developing backend applications with Core Java, Advanced Java, and Spring Boot. Working with SQL databases and JDBC for data management, and applying OOP, Collections, exception handling, and multithreading. Managing projects and source code on GitHub.</div>
+          </div>
+        </div>
+        <div class="exp-item">
+          <div class="exp-time">Aug 2020 — Jul 2022</div>
+          <div>
+            <div class="exp-role">M.Sc. Mathematics</div>
+            <div class="exp-org">Kadi Sarva Vishwavidyalaya (KSV), Gandhinagar</div>
+            <div class="exp-desc">Built a strong analytical and problem-solving foundation that now carries directly into backend development and debugging.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">04</span><h2>Contact</h2></div>
+      <div class="contact-box">
+        <h2>Let's talk</h2>
+        <p>Open to entry-level Java Developer roles — on-site, hybrid, or remote, and open to relocation. Fastest way to reach me is email or phone.</p>
+        <div class="contact-methods">
+          <a class="btn btn-primary" href="mailto:dhruvenbbhatol51@gmail.com">dhruvenbbhatol51@gmail.com</a>
+          <a class="btn btn-ghost" href="tel:+917623990054">+91 76239 90054</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/dhruvenbhatol-b63769427" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="#">Resume (PDF)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  built by dhruven.bhatol — 2026
+</footer>
+
+</body>
+</html>
